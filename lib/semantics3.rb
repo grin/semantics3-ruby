@@ -44,16 +44,9 @@ module Semantics3
                 response = @auth.delete(url,params)
                 JSON.parse response.body
             else    
-                url = URI(base_url+endpoint)
-                request = Net::HTTP::Post.new url.request_uri
-                request.set_form_data(params)
-                http             = Net::HTTP.new url.host, url.port
-                http.use_ssl     = true
-                http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-                request.oauth! http, @consumer,@auth
-                http.start
-                response = http.request request
-                  JSON.parse response.body
+                url = base_url + endpoint
+                response = @auth.post(url, {body: params})
+                JSON.parse response.body
             end
         end
 
