@@ -45,7 +45,8 @@ module Semantics3
                 JSON.parse response.body
             else    
                 url = URI(base_url+endpoint)
-                request = Net::HTTP::Post.new url.request_uri,params
+                request = Net::HTTP::Post.new url.request_uri
+                request.set_form_data(params)
                 http             = Net::HTTP.new url.host, url.port
                 http.use_ssl     = true
                 http.verify_mode = OpenSSL::SSL::VERIFY_PEER
